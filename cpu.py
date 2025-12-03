@@ -95,10 +95,24 @@ class Cpu:
                     pass  # complete implementation here Colm
                 case "SUB":
                     pass  # complete implementation here Colm
+                # Perform bitwise AND on registers ra and rb
                 case "AND":
-                    pass  # complete implementation here
+                    self._alu.set_op("AND")
+                    rd = self._decoded.rd
+                    ra = self._decoded.ra
+                    rb = self._decoded.rb
+                    op_a, op_b = self._regs.execute(ra=ra, rb=rb)
+                    result = self._alu.execute(op_a, op_b)
+                    self._regs.execute(rd=rd, data=result, write_enable=True)
+                # ALU op is "OR"
                 case "OR":
-                    pass  # complete implementation here
+                    self._alu.set_op("OR")
+                    rd = self._decoded.rd
+                    ra = self._decoded.ra
+                    rb = self._decoded.rb
+                    op_a, op_b = self._regs.execute(ra=ra, rb=rb)
+                    result = self._alu.execute(op_a, op_b)
+                    self._regs.execute(rd=rd, data=result, write_enable=True)
                 case "SHFT":
                     self._alu.set_op("SHFT")
                     rd = self._decoded.rd
