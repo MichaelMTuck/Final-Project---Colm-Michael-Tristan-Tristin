@@ -90,11 +90,22 @@ class Cpu:
                 case "STORE":
                     pass  # complete implementation here Tristan
                 case "ADDI":
-                    pass  # complete implementation here Colm
+                    rd = self._decoded.rd
+                    imm = self._decoded.imm & 0xFF
+                    data = rd + self.sext(imm)
+                    self._regs.execute(rd=rd, data=data, write_enable=True)
                 case "ADD":
-                    pass  # complete implementation here Colm
+                    rd = self._decoded.rd
+                    ra = self._decoded.ra
+                    rb = self._decoded.rb
+                    data = ra + rb
+                    self._regs.execute(rd=rd, data=data, write_enable=True)
                 case "SUB":
-                    pass  # complete implementation here Colm
+                    rd = self._decoded.rd
+                    ra = self._decoded.ra
+                    rb = self._decoded.rb
+                    data = ra - rb
+                    self._regs.execute(rd=rd, data=data, write_enable=True)
                 # Perform bitwise AND on registers ra and rb - TH
                 case "AND":
                     self._alu.set_op("AND")
