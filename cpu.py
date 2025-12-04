@@ -121,7 +121,7 @@ class Cpu:
                     base_val, _ = self._regs.execute(ra = rb)
 
                     # sign extend offset
-                    offset = self.sext(offset, 6)
+                    offset = self.sext(self._decoded.addr, 6)
 
                     # aux adder
                     eff_addr = (base_val + offset) & 0xFFFF
