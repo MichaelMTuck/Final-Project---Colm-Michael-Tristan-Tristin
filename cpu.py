@@ -73,7 +73,16 @@ class Cpu:
             # execute...
             match self._decoded.mnem:
                 case "LOADI":
-                    pass  # complete implementation here Tristan
+                    rd = self._decoded.rd
+                    # 8 bit
+                    imm8 = self._decoded.imm & 0xFF
+
+                    # Write 
+                    self._regs.execute(
+                        rd = rd,
+                        data = imm8,
+                        write_enable=True
+                    )
                 case "LUI":
                     # TODO Refactor for future semester(s) if any.
                     # Cheating for compatibility with released ALU tests
@@ -86,9 +95,39 @@ class Cpu:
                     data = upper | lower
                     self._regs.execute(rd=rd, data=data, write_enable=True)
                 case "LOAD":
-                    pass  # complete implementation here Tristan
+                    rd = self._decoded.rd
+                    ra = self._decoded.ra
+
+                    # Read base register
+                    base_val, _ = self._regs.execute(ra=ra)
+
+                    # sign extend
+                    offset = self.sext(self._decoded.addr, 6)
+                    # Address using aux adder
+                    eff_addr = (base_val + offset) & 0xFFFF
+                    # read data from memory
+                    value = self._d_mem.read(eff_addr)
+                    # write to rd
+                    self._regs.execute(rd = rd, data = value, write_enable = True)
+
                 case "STORE":
-                    pass  # complete implementation here Tristan
+                    ra = self._decoded.ra
+                    rb = self._decoded.rb
+
+                    # read ra
+                    src_val, _ = self._regs.execute(ra = ra)
+
+                    # read rb
+                    base_val, _ = self._regs.execute(ra = rb)
+
+                    # sign extend offset
+                    offset = self.sext(offset, 6)
+
+                    # aux adder
+                    eff_addr = (base_val + offset) & 0xFFFF
+
+                    # STORE
+                    self._d_mem.write(eff_addr, src_val)
                 case "ADDI":
                     rd = self._decoded.rd
                     imm = self._decoded.imm & 0xFF
