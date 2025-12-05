@@ -1,0 +1,14 @@
+; multiply_p2.asm - TH
+
+LOADI R0 0x03
+LOADI R1 0x06
+
+OR    R2 R1 R1
+
+ADD   R3 R2 R2
+ADD   R4 R3 R3
+ADD   R5 R4 R4
+ADD   R6 R5 R5
+ADD   R7 R6 R6
+
+HALT
