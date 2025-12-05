@@ -132,12 +132,13 @@ class Cpu:
                     self._alu.set_op("ADD")
                     rd = self._decoded.rd
                     ra = self._decoded.ra
-                    imm = self._decoded.imm & 0xFF
+                    imm8 = self._decoded.imm & 0xFF
 
-                    original, _ = self._regs.execute(ra=ra)
-                    add_val, _ = self._regs.execute(imm=imm)
+                    imm = self.sext(imm8, 8)
 
-                    result = self._alu.execute(original + self.sext(add_val))
+                    a, _ = self._regs.execute(ra=ra)
+
+                    result = self._alu.execute(a, imm)
 
                     self._regs.execute(rd=rd, data=result, write_enable=True)
                 case "ADD":
