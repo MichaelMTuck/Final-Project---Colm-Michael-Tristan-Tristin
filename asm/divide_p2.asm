@@ -1,4 +1,4 @@
-; divide_p2.asm - divide 448 by powers of 2
+; divide_p2.asm - divide 448 by powers of 2 - TH
 LOADI R0 0xC0
 LUI   R0 0x01
 
