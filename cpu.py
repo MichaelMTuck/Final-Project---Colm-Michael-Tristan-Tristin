@@ -196,7 +196,9 @@ class Cpu:
                         offset = self.sext(self._decoded.imm, 8)
                         self._pc = (self._pc + offset) & 0xFFFF
                 case "B":
-                    pass  # complete implementation here
+                    # Branch on instruction
+                    offset = self.sext(self._decoded.imm, 8)
+                    self._pc = (self._pc + offset) & 0xFFFF
                 case "CALL":
                     self._sp -= 1  # grow stack downward
                     # PC is incremented immediately upon fetch so already
