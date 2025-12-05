@@ -192,7 +192,9 @@ class Cpu:
                         offset = self.sext(self._decoded.imm, 8)
                         self._pc += offset  # take branch
                 case "BNE":
-                    pass  # complete implementation here
+                    if not self._alu.zero:
+                        offset = self.sext(self._decoded.imm, 8)
+                        self._pc = (self._pc + offset) & 0xFFFF
                 case "B":
                     pass  # complete implementation here
                 case "CALL":
