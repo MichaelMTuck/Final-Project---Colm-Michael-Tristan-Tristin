@@ -1,26 +1,12 @@
-; multiply_p2.asm - TH
+; multiply_p2.asm
+; multiply 3 by powers of two, store in R0-R7
 
-SHFT R0 R0 R0
-
-LOADI R0
-LOADI R1
-
-ADDI R2 R1
-
-; create R7 shift-amount register (set to 1) using ADDI (from zero)
-ADDI R7 R7 #1      ; 2
-
-; filler ADDI instructions to reach requested ADDI count = 5
-ADDI R1 R1 #0      ; 3
-ADDI R1 R1 #0      ; 4
-ADDI R1 R1 #0      ; 5
-
-; Create R3..R7 by repeatedly shifting left by 1 (six SHFTs total including cushion)
-SHFT R3 R2 R7
-SHFT R4 R3 R7
-SHFT R5 R4 R7
-SHFT R6 R5 R7
-SHFT R7 R6 R7
-
+LOADI R0, #3        ; original constant
+LOADI R1, #1        ; will hold shift amount 1
+SHFT R2, R0, R1     ; 3 * 2^1 = 6
+SHFT R3, R2, R1     ; 6 * 2^1 = 12
+SHFT R4, R3, R1     ; 12 * 2^1 = 24
+SHFT R5, R4, R1     ; 24 * 2^1 = 48
+SHFT R6, R5, R1     ; 48 * 2^1 = 96
+SHFT R7, R6, R1     ; 96 * 2^1 = 192
 HALT
-
