@@ -77,7 +77,7 @@ class Cpu:
                     # 8 bit
                     imm8 = self._decoded.imm & 0xFF
 
-                    # Write 
+                    # Write
                     self._regs.execute(
                         rd = rd,
                         data = imm8,
@@ -109,7 +109,6 @@ class Cpu:
                     value = self._d_mem.read(eff_addr)
                     # write to rd
                     self._regs.execute(rd = rd, data = value, write_enable = True)
-
                 case "STORE":
                     ra = self._decoded.ra
                     rb = self._decoded.rb
@@ -129,21 +128,34 @@ class Cpu:
                     # STORE
                     self._d_mem.write(eff_addr, src_val)
                 case "ADDI":
+                    self._alu.set_op("ADD")
                     rd = self._decoded.rd
+                    ra = self._decoded.ra
                     imm = self._decoded.imm & 0xFF
-                    data = rd + self.sext(imm)
+
+                    original, _ = self._regs.execute(ra=ra)
+                    add_val, _ = self._regs.execute(imm=imm)
+
+                    data = original + self.sext(add_val)
+
                     self._regs.execute(rd=rd, data=data, write_enable=True)
                 case "ADD":
+                    self._alu.set_op("ADD")
                     rd = self._decoded.rd
                     ra = self._decoded.ra
                     rb = self._decoded.rb
+
                     data = ra + rb
+
                     self._regs.execute(rd=rd, data=data, write_enable=True)
                 case "SUB":
+                    self._alu.set_op("SUB")
                     rd = self._decoded.rd
                     ra = self._decoded.ra
                     rb = self._decoded.rb
+
                     data = ra - rb
+
                     self._regs.execute(rd=rd, data=data, write_enable=True)
                 # Perform bitwise AND on registers ra and rb - TH
                 case "AND":
