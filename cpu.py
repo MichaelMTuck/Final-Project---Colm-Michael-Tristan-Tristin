@@ -126,6 +126,7 @@ class Cpu:
                     eff_addr = (base_val + offset) & 0xFFFF
 
                     # STORE
+                    self._d_mem.write_enable(True)
                     self._d_mem.write(eff_addr, src_val)
                 case "ADDI":
                     self._alu.set_op("ADD")
@@ -136,9 +137,9 @@ class Cpu:
                     original, _ = self._regs.execute(ra=ra)
                     add_val, _ = self._regs.execute(imm=imm)
 
-                    data = original + self.sext(add_val)
+                    result = self._alu.execute(original + self.sext(add_val))
 
-                    self._regs.execute(rd=rd, data=data, write_enable=True)
+                    self._regs.execute(rd=rd, data=result, write_enable=True)
                 case "ADD":
                     self._alu.set_op("ADD")
                     rd = self._decoded.rd
