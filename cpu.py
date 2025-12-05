@@ -209,13 +209,13 @@ class Cpu:
                     # Get return address from memory via SP
                     # Increment SP
                     # Update PC
-                    ret_addr = self._pc
+                    ret_addr = self._sp
                     self._sp += 1
                     self._d_mem.write_enable(True)
                     self._d_mem.write(self._sp, ret_addr, from_stack=True)
                     self._pc += 8
                 case "HALT":
-                    pass
+                    self._halt = True
                 case _:  # default
                     raise ValueError(
                         "Unknown mnemonic: " + str(self._decoded) + "\n" + str(self._ir)
