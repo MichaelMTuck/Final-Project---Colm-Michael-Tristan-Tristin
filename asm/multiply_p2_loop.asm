@@ -1,15 +1,16 @@
-; multiply_p2_loop.asm - fixed version
+; multiply_p2_loop.asm - multiply 5 by powers of 2 and store in memory
 
-; initialize registers
-LOADI R0 10       ; R0 = 10 (value to multiply)
-LOADI R2 0        ; R2 = memory index / address
-LOADI R3 9        ; R3 = loop counter (9 iterations for MEM[0..8])
+LOADI R0 5       ; base value
+LOADI R1 1       ; shift count
+LOADI R2 0       ; memory index
+LOADI R3 9       ; loop counter
 
 loop:
-    STORE R0 [R2]       ; store R0 into memory[R2]
-    ADD R0 R0 R0        ; multiply R0 by 2
-    ADDI R2 R2 1        ; increment memory address
-    ADDI R3 R3 -1       ; decrement loop counter
-    BNE R3 loop         ; if R3 != 0, repeat
+    SHFT R4 R0 R1
+    STORE R4 [R2]
+    ADDI R2 R2 1
+    ADDI R1 R1 1
+    ADDI R3 R3 -1
+    BNE R3 loop
 
 HALT
