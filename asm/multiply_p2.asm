@@ -1,4 +1,4 @@
-; multiply_p2.asm
+; multiply_p2.asm - TH
 ; multiply 3 by powers of two, store in R0-R7
 
 LOADI R0, #3        ; original constant
