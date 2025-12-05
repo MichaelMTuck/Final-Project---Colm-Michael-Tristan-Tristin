@@ -147,18 +147,20 @@ class Cpu:
                     ra = self._decoded.ra
                     rb = self._decoded.rb
 
-                    data = ra + rb
+                    a, b = self._regs.execute(ra=ra, rb=rb)
+                    result = self._alu.execute(a, b)
 
-                    self._regs.execute(rd=rd, data=data, write_enable=True)
+                    self._regs.execute(rd=rd, data=result, write_enable=True)
                 case "SUB":
                     self._alu.set_op("SUB")
                     rd = self._decoded.rd
                     ra = self._decoded.ra
                     rb = self._decoded.rb
+                    
+                    a, b = self._regs.execute(ra=ra, rb=rb)
+                    result = self._alu.execute(a, b)
 
-                    data = ra - rb
-
-                    self._regs.execute(rd=rd, data=data, write_enable=True)
+                    self._regs.execute(rd=rd, data=result, write_enable=True)
                 # Perform bitwise AND on registers ra and rb - TH
                 case "AND":
                     self._alu.set_op("AND")
