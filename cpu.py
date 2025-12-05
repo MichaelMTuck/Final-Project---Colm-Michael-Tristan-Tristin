@@ -214,7 +214,7 @@ class Cpu:
                     # Increment SP
                     # Update PC
                     ret_addr = self._d_mem.read(self._sp)
-                    self._sp += 1
+                    self._sp = (self._sp + 1) & 0xFFFF
                     
                     self._pc = ret_addr
 
